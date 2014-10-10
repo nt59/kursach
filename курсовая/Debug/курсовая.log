@@ -1,0 +1,21 @@
+﻿Build started 09.10.2014 22:04:05.
+     1>Project "C:\Users\ito1\documents\visual studio 2013\Projects\курсовая\курсовая\курсовая.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\курсовая.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\курсовая.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "курсовая.cpp"
+         курсовая.cpp
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(3): warning C4603: '_CRT_SECURE_NO_WARNINGS' : macro is not defined or definition is different after precompiled header use
+                 Add macro to precompiled header instead of defining here
+                 c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(4) : use of precompiled header
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(398): error C2535: 'void Shop::Write_into_file(void)' : member function already defined or declared
+                 c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(197) : see declaration of 'Shop::Write_into_file'
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(118): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(354): error C2374: 'temp' : redefinition; multiple initialization
+                 c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(352) : see declaration of 'temp'
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(359): fatal error C1903: unable to recover from previous error(s); stopping compilation
+     1>Done Building Project "C:\Users\ito1\documents\visual studio 2013\Projects\курсовая\курсовая\курсовая.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:09.84
