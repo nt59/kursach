@@ -126,7 +126,7 @@ public:
 		}
 		while (node != NULL)
 		{
-			out_stream << node->client.clientID << " " << node->client.C_name << " " << ((node->client.type)?("+"):("-")) << endl;
+			out_stream << node->client.clientID << " " << node->client.C_name << " " << ((node->client.type) ? ("+") : ("-")) << endl;
 			node = node->next;
 		}
 		out_stream.close();
@@ -135,7 +135,7 @@ public:
 	void print_Client()											//вывод списка на экран
 	{
 		List_Client *node = head_client;
-		printf("\n %15s! %30s", "ID Client!			 Client's name         !        type ");
+		printf("\n %15s! %30s", "ID Клиента!			 Имя клиента         !        Тип ");
 		while (node != NULL)
 		{
 			printf("\n %3d ! %30s! %10s", node->client.clientID, node->client.C_name, node->client.type);
@@ -143,9 +143,11 @@ public:
 		}
 	}
 	/*---------------------------------------------------------------------------------------------*/
-	Information push_information()
+	void push_information()
 	{
 		Information inf;
+		string buf;
+		int i = 0;
 		char c;
 		cout << "\nВведите информацию:\n";
 		List_Information *node1 = head_information;
@@ -156,36 +158,67 @@ public:
 			node1 = node1->next;
 		}
 		inf.informationID = counter + 1;
+		cin.get(c);
+		while (true){
+			cout << "\nВведите Id клиента: ";
+			getline(cin, buf);
+			if (isNumber(buf)){
+				i = atoi(buf.c_str());
+				break;
+			}
+			else
+				cout << "Ошибка! Введите число!";
+		}
+		List_Client *nodeCl = head_client;
+		while (nodeCl != NULL && nodeCl->client.clientID != i)
+		{
+			nodeCl = nodeCl->next;
+		}
+		if (nodeCl == NULL)
+		{
+			cout << "Ошибка! Клиента с данным ID не существует";
+			return;
+		}
+		inf.informationID = i;
 		while (true){
 			cout << "Введите это аудио или видео (1 - audio, 2 - video): ";
-			
-			cin.getline(inf.A_V, 100);
-			if (inf.A_V == "1"){
+			getline(cin, buf);
+			if (isNumber(buf)){
+				i = atoi(buf.c_str());
+			}
+			if (i == 1){
 				strcpy_s(inf.A_V, "audio");
 				break;
 			}
-			if (inf.A_V == "2"){
+			if (i == 2){
 				strcpy_s(inf.A_V, "video");
 				break;
 			}
 		}
-
-		cout << "Enter CD or DVD" << endl;
-		cin.getline(inf.Cd_DvD, 100);
-
-
+		while (true){
+			cout << "Введите это CD или DVD (1 - CD, 2 - DVD): ";
+			getline(cin, buf);
+			if (isNumber(buf)){
+				i = atoi(buf.c_str());
+			}
+			if (i == 1){
+				strcpy_s(inf.A_V, "CD");
+				break;
+			}
+			if (i == 2){
+				strcpy_s(inf.A_V, "DVD");
+				break;
+			}
+		}
 		List_Information *node = new List_Information;
 		node->information = inf;
 		node->next = head_information;
-		head_information= node;
-
-		return inf;
+		head_information = node;
 	}
 
 	void Delete_Information(int id)
 	{
 		if (head_information == NULL)
-
 			return;
 		List_Information *temp = head_information;
 		if (head_information->information.informationID == id)
@@ -205,6 +238,8 @@ public:
 
 	Information EditInformation(int id)
 	{
+		string buf;
+		int i = 0;
 		List_Information *node = head_information;
 		while (node->next != NULL && node->information.informationID != id)
 		{
@@ -212,13 +247,39 @@ public:
 		}
 		Information inf;
 		char c;
-		cout << "\n Enter date information's type.\n ";
+		cout << "\n.\n ";
 		cin.get(c);
 		inf.informationID = id;
-		cout << "Enter audio or video" << endl;
-		cin.getline(inf.A_V, 100);
-		cout << "Enter CD or DVD" << endl;
-		cin.getline(inf.Cd_DvD, 100);
+		while (true){
+			cout << "Введите это аудио или видео (1 - audio, 2 - video): ";
+			getline(cin, buf);
+			if (isNumber(buf)){
+				i = atoi(buf.c_str());
+			}
+			if (i == 1){
+				strcpy_s(inf.A_V, "audio");
+				break;
+			}
+			if (i == 2){
+				strcpy_s(inf.A_V, "video");
+				break;
+			}
+		}
+		while (true){
+			cout << "Введите это CD или DVD (1 - CD, 2 - DVD): ";
+			getline(cin, buf);
+			if (isNumber(buf)){
+				i = atoi(buf.c_str());
+			}
+			if (i == 1){
+				strcpy_s(inf.A_V, "CD");
+				break;
+			}
+			if (i == 2){
+				strcpy_s(inf.A_V, "DVD");
+				break;
+			}
+		}
 		node->information = inf;
 		return inf;
 	}
@@ -227,14 +288,19 @@ public:
 	{
 		List_Information *node = head_information;
 		char file3[200];
-		cout << "Show way of saving file" << endl;
+		cout << "Укажите путь сохраняемого файла:" << endl;
 		char c;
 		cin.get(c);
 		cin.getline(file3, 200);
 		out_stream.open(file3);
+		if (!out_stream)
+		{
+			cout << "Ошибка! Введен некорректный путь до файла!";
+			return;
+		}
 		while (node != NULL)
 		{
-			out_stream << node->information.informationID << " " << node->information.informationID << endl;
+			out_stream << node->information.informationID << "," << node->information.A_V << "," << node->information.Cd_DvD<<"." << endl;
 			node = node->next;
 		}
 		out_stream.close();
@@ -243,7 +309,7 @@ public:
 	void print_Information()
 	{
 		List_Information *node = head_information;
-		printf("\n %15s! %30s", "Information's ID!			 A_V         !          CD_DvD");
+		printf("\n %15s! %30s", "ID Информации!		Аудио или Видео    !          CD или DvD");
 		while (node != NULL)
 		{
 			printf("\n %3d ! %30s! %30s", node->information.informationID, node->information.A_V, node->information.Cd_DvD);
@@ -257,15 +323,15 @@ public:
 		char c;
 		cout << "\n Enter data " << i + 1 << " check.\n ";
 		cout << "ID of new type was determined automatically" << endl;
-		
+
 		List_Check *node1 = head_check;
-		
+
 		cout << "Enter revenue's value" << endl;
 		cin >> ch.Revenue;
 		cout << "Enter rent time" << endl;
 		cin >> ch.RentTime;
 		cout << "Enter data" << endl;
-	    ch.Data = getData();
+		ch.Data = getData();
 
 
 		List_Check *node = new List_Check;
@@ -277,7 +343,7 @@ public:
 	}
 
 	void Delete_Check(int id)					//удалить записи
-	{	
+	{
 		List_Check *temp = head_check;
 		if (head_check->check.checkId == id)
 		{
@@ -292,7 +358,7 @@ public:
 			}
 			temp = temp->next;
 		}
-		
+
 	}
 
 	Check EditCheck(int id)
@@ -429,7 +495,7 @@ public:
 		}
 
 	}
-	      
+
 	void Delete_CaI(int id)					//удалить записи
 	{
 		List_Client *temp = head_client;
@@ -483,7 +549,7 @@ public:
 		out_stream.open(file2);
 		while (node != NULL)
 		{
-			out_stream << node->cai.caiID<< " " << node->cai.clientID << "  " << node->cai.informationID << "  " << endl;
+			out_stream << node->cai.caiID << " " << node->cai.clientID << "  " << node->cai.informationID << "  " << endl;
 			node = node->next;
 		}
 		out_stream.close();
@@ -559,8 +625,8 @@ public:
 		getline(cin, time_l);
 		while (isNumber(time_l) == false)
 		{
-			cout << "Неверный формат данных" << endl;
-			getline(cin, time_l);
+		cout << "Неверный формат данных" << endl;
+		getline(cin, time_l);
 		}*/
 		bool flag1 = false;
 		bool flag2 = false;
@@ -694,7 +760,7 @@ public:
 					in_stream >> t.C_name;
 					in_stream >> t.type;
 					List_Client *node = new List_Client;
-					node->client= t;
+					node->client = t;
 					node->next = head_client;
 					head_client = node;
 				}
@@ -865,13 +931,12 @@ public:
 
 
 
-
-
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 	system("mode con cols=200 lines=59");
 	Shop mas[5];
+	char c;
 main_menu:
 	int menu_lvl1;
 	cout << "______________________________" << endl;
@@ -886,39 +951,45 @@ main_menu:
 	cout << "--> введите пункт меню " << endl;
 	cout << "-->";
 	cin >> menu_lvl1;
+	cin.get(c);
 	while (!cin.good())
 	{
 		cin.clear();
 		_flushall();
 		cout << "Введите корректные данные" << endl;
 		cin >> menu_lvl1;
+		cin.get(c);
 	}
 	switch (menu_lvl1)
 	{
 	case 1:
 
 	sub_menu1 :
-		cout << " _________МАГАЗИН 1___________________________________" << endl;
-			  cout << "|1-ФИО клиента                                       |" << endl;
-			  cout << "|2-Информация                                      |" << endl;
-			  cout << "|3-Учет                                             |" << endl;
-			  cout << "|4-Связь информации и клиента                                     |" << endl;
-			  cout << "|5-Связь клиента и учета                                |" << endl;
-			  cout << "|-----------------------------------------------------|" << endl;
-			  cout << "|6-загрузить БД из файлов                             |" << endl;
-			  cout << "|7-отчёт №1 - по дате проведения операции с товаром   |" << endl;// сделать!!!!!
-			  cout << "|0-назад                                              |" << endl;
-			  cout << "|_____________________________________________________|" << endl;
+		cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\r\n";
+			  cout << "Выберите пункт меню: \r\n\n"
+				  << " 1 - Клиенты\r\n"
+				  << " 2 - Инфомация о продукции\r\n"
+				  << " 3 - Учет\r\n"
+				  << " 4 - Связь информации и клиента\r\n"
+				  << " 5 - Связь клиента и учета\r\n"
+				  << " 6 - Отчет о результатах сессии для группы\r\n"
+				  << " 7 - Отчет о получаемой стипендии студентами группы\r\n"
+				  << " 8 - Сохранить изменения\r\n"
+				  << " 9 - Загрузить данные\r\n"
+				  << " 0 - Выход в главное меню\r\n"
+				  << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+				  << "\r\n";
 			  int sub_menu1_choise;
-			  cout << "Введите пункт меню" << endl;
+			  cout << "Введите пункт меню: ";
 			  cin >> sub_menu1_choise;
 			  while (!cin.good())
 			  {
 				  cin.clear();
 				  _flushall();
-				  cout << "Введите корректные данные" << endl;
+				  cout << "Введите пункт меню: ";
 				  cin >> sub_menu1_choise;
 			  }
+
 			  switch (sub_menu1_choise)
 			  {
 			  case 1:
@@ -934,12 +1005,14 @@ main_menu:
 						  int sub_menu1_t_choise;
 						  cout << "Введите пункт меню" << endl;
 						  cin >> sub_menu1_t_choise;
+						  cin.get(c);
 						  while (!cin.good())
 						  {
 							  cin.clear();
 							  _flushall();
 							  cout << "Введите корректные данные" << endl;
 							  cin >> sub_menu1_t_choise;
+							  cin.get(c);
 						  }
 						  switch (sub_menu1_t_choise)
 						  {
