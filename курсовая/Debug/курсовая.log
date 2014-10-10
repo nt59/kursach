@@ -1,4 +1,4 @@
-﻿Build started 10.10.2014 12:06:42.
+﻿Build started 10.10.2014 13:24:09.
      1>Project "C:\Users\ito1\documents\visual studio 2013\Projects\курсовая\курсовая\курсовая.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\курсовая.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "курсовая.cpp"
@@ -7,16 +7,26 @@
                  Add macro to precompiled header instead of defining here
                  c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(4) : use of precompiled header
      1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\functions.h(11): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\functions.h(100): error C2062: type 'int' unexpected
-     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\functions.h(101): error C2065: 'year' : undeclared identifier
-     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\functions.h(102): error C2065: 'year' : undeclared identifier
-     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(301): error C2535: 'void Shop::Write_into_file(void)' : member function already defined or declared
-                 c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(107) : see declaration of 'Shop::Write_into_file'
-     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(260): error C2374: 'temp' : redefinition; multiple initialization
-                 c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(258) : see declaration of 'temp'
-     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(265): fatal error C1903: unable to recover from previous error(s); stopping compilation
-     1>Done Building Project "C:\Users\ito1\documents\visual studio 2013\Projects\курсовая\курсовая\курсовая.vcxproj" (Build target(s)) -- FAILED.
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(149): warning C4101: 'c' : unreferenced local variable
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(256): warning C4101: 'c' : unreferenced local variable
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(679): warning C4101: 'name' : unreferenced local variable
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(711): warning C4101: 'name' : unreferenced local variable
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(743): warning C4101: 'name' : unreferenced local variable
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(776): warning C4101: 'name' : unreferenced local variable
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(807): warning C4101: 'name' : unreferenced local variable
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(430): warning C4715: 'Shop::push_CaI' : not all control paths return a value
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(603): warning C4715: 'Shop::push_CaC' : not all control paths return a value
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(705): warning C4715: 'Shop::load_client_files' : not all control paths return a value
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(737): warning C4715: 'Shop::load_information_files' : not all control paths return a value
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(770): warning C4715: 'Shop::load_check_files' : not all control paths return a value
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(801): warning C4715: 'Shop::load_cai_files' : not all control paths return a value
+     1>c:\users\ito1\documents\visual studio 2013\projects\курсовая\курсовая\курсовая.cpp(833): warning C4715: 'Shop::load_cac_files' : not all control paths return a value
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\ito1\documents\visual studio 2013\Projects\курсовая\Debug\курсовая.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\ito1\documents\visual studio 2013\Projects\курсовая\Debug\курсовая.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\ito1\documents\visual studio 2013\Projects\курсовая\Debug\курсовая.lib" /MACHINE:X86 Debug\stdafx.obj
+         "Debug\курсовая.obj"
+         курсовая.vcxproj -> C:\Users\ito1\documents\visual studio 2013\Projects\курсовая\Debug\курсовая.exe
+     1>Done Building Project "C:\Users\ito1\documents\visual studio 2013\Projects\курсовая\курсовая\курсовая.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:06.67
+Time Elapsed 00:00:03.79

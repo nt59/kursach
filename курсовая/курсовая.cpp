@@ -39,9 +39,7 @@ public:
 	{
 		Client t;
 		char c;
-		cout << "\n Enter data  " << i + 1 << " client.\n ";
-		cout << "ID of new type was determined automatically:" << endl;
-		/*cin >> t.TipID;*/
+		cout << "\n Введите данные  " << i + 1 << " клиента.\n ";
 		List_Client *node1 = head_client;
 		int counter = 0;
 		while (node1 != NULL)
@@ -50,12 +48,11 @@ public:
 			node1 = node1->next;
 		}
 		t.clientID = counter + 1;
-		cin.get(c);
-		cout << "Enter name of client" << endl;
+		cout << "Введите имя клиента: ";
 		cin.getline(t.C_name, 40);
-		//cout << "Enter type of client" << endl; // ----не ясно
-		//cin >> t.type; // ------не ясно
-		if ((head_client != NULL) && (t.clientID != 0)) // ДОДЕЛАТЬ!!!!!
+		cout << "Данный клиент является постоянным? (+/-) : ";
+		cin.get(c);
+		if (c == '+')
 			t.type = true;
 		else
 			t.type = false;
@@ -74,6 +71,7 @@ public:
 		if (head_client->client.clientID == id)
 		{
 			head_client = head_client->next;
+			return;
 		}
 		while (temp->next != NULL)
 		{
@@ -95,27 +93,40 @@ public:
 		}
 		Client t;
 		char c;
-		cout << "\n Enter data of client\n ";
-		cin.get(c);
+		cout << "\nВведите новые данные клиента:\n ";
 		t.clientID = id;
-		cout << "Enter name of client" << endl;
+		cout << "Введите имя клиента: ";
 		cin.getline(t.C_name, 40);
+		cout << "Данный клиент является постоянным? (+/-) : ";
+		cin.get(c);
+		if (c == '+')
+			t.type = true;
+		else
+			t.type = false;
 		node->client = t;
 		return t;
 	}
 
-	void Write_into_file()
+	void Write_into_file_client()
 	{
 		List_Client *node = head_client;
 		char file1[200];
-		cout << "Укажите путь сохраняемого файла" << endl;
-		char c;
-		cin.get(c);
-		cin.getline(file1, 200);
-		out_stream.open(file1);
+		while (true){
+			cout << "Укажите путь сохраняемого файла: ";
+			char c;
+			cin.getline(file1, 200);
+			cin.get(c);
+			out_stream.open(file1);
+			if (!out_stream){
+				cout << "Ошибка при открытии файла!\n";
+			}
+			else{
+				break;
+			}
+		}
 		while (node != NULL)
 		{
-			out_stream << node->client.clientID << " " << node->client.C_name << endl;
+			out_stream << node->client.clientID << " " << node->client.C_name << " " << ((node->client.type)?("+"):("-")) << endl;
 			node = node->next;
 		}
 		out_stream.close();
@@ -132,13 +143,11 @@ public:
 		}
 	}
 	/*---------------------------------------------------------------------------------------------*/
-	Information push_information(int i)
+	Information push_information()
 	{
 		Information inf;
 		char c;
-		cout << "\n Enter " << i + 1 << " information.\n ";
-		cout << "ID of new type was determined automatically:" << endl;
-		/*cin >> t.TipID;*/
+		cout << "\nВведите информацию:\n";
 		List_Information *node1 = head_information;
 		int counter = 0;
 		while (node1 != NULL)
@@ -147,9 +156,20 @@ public:
 			node1 = node1->next;
 		}
 		inf.informationID = counter + 1;
-		cin.get(c);
-		cout << "Enter audio or video" << endl;
-		cin.getline(inf.A_V,100);
+		while (true){
+			cout << "Введите это аудио или видео (1 - audio, 2 - video): ";
+			
+			cin.getline(inf.A_V, 100);
+			if (inf.A_V == "1"){
+				strcpy_s(inf.A_V, "audio");
+				break;
+			}
+			if (inf.A_V == "2"){
+				strcpy_s(inf.A_V, "video");
+				break;
+			}
+		}
+
 		cout << "Enter CD or DVD" << endl;
 		cin.getline(inf.Cd_DvD, 100);
 
@@ -164,6 +184,9 @@ public:
 
 	void Delete_Information(int id)
 	{
+		if (head_information == NULL)
+
+			return;
 		List_Information *temp = head_information;
 		if (head_information->information.informationID == id)
 		{
@@ -254,9 +277,7 @@ public:
 	}
 
 	void Delete_Check(int id)					//удалить записи
-	{
-		List_Check *temp = head_check;
-	
+	{	
 		List_Check *temp = head_check;
 		if (head_check->check.checkId == id)
 		{
@@ -297,7 +318,7 @@ public:
 		return ch;
 	}
 
-	void Write_into_file()
+	void Write_into_file_check()
 	{
 		List_Check *node = head_check;
 		char file3[200];
@@ -958,7 +979,7 @@ main_menu:
 							  goto sub_menu1_t;
 							  break;
 						  case 5:
-							  mas[0].Write_into_file();
+							  mas[0].Write_into_file_client();
 							  cout << endl;
 							  goto sub_menu1_t;
 							  break;
@@ -993,15 +1014,6 @@ main_menu:
 							}
 							switch (sub_menu1_inf_choise)
 							{
-								/*case 1:
-								char c, file_dir[100];
-								cout << "Введите путь до файлов" << endl;
-								cin.get(c);
-								cin.getline(file_dir, 100);
-								mas[0].ReadMarksFromFile(file_dir);
-								cout << endl;
-								goto sub_menu1_marks;
-								break;*/
 							case 1:
 								int number_add_inf;
 								cout << "Введите количество добавляемой информации" << endl;
@@ -1009,7 +1021,7 @@ main_menu:
 								cin >> number_add_inf;
 								for (int i = 0; i < number_add_inf; i++)
 								{
-									mas[0].push_information(i);
+									mas[0].push_information();
 								}
 								cout << endl;
 								goto sub_menu1_inf;
@@ -1083,7 +1095,6 @@ main_menu:
 							  {
 								  mas[0].push_check(i);
 							  }
-							  /*mas[0].print_goods();*/
 							  cout << endl;
 							  goto sub_menu1_ch;
 							  break;
@@ -1111,7 +1122,7 @@ main_menu:
 							  goto sub_menu1_ch;
 							  break;
 						  case 5:
-							  mas[0].Write_into_file();
+							  mas[0].Write_into_file_check();
 							  cout << endl;
 							  goto sub_menu1_ch;
 							  break;
@@ -1216,15 +1227,6 @@ main_menu:
 
 							switch (sub_menu1_cac_choise)
 							{
-								/*case 1:
-								char c, file_dir[100];
-								cout << "Введите путь до файлов" << endl;
-								cin.get(c);
-								cin.getline(file_dir, 100);
-								mas[0].ReadMovesFromFile(file_dir);
-								cout << endl;
-								goto sub_menu1_moves;
-								break;*/
 							case 1:
 								int number_add_cac;
 								cout << "Введите количество добавляемых операций" << endl;
@@ -1392,7 +1394,7 @@ main_menu:
 							  goto sub_menu2_t;
 							  break;
 						  case 5:
-							  mas[0].Write_into_file();
+							  mas[0].Write_into_file_client();
 							  cout << endl;
 							  goto sub_menu2_t;
 							  break;
@@ -1427,15 +1429,6 @@ main_menu:
 							}
 							switch (sub_menu2_inf_choise)
 							{
-								/*case 1:
-								char c, file_dir[100];
-								cout << "Введите путь до файлов" << endl;
-								cin.get(c);
-								cin.getline(file_dir, 100);
-								mas[0].ReadMarksFromFile(file_dir);
-								cout << endl;
-								goto sub_menu2_marks;
-								break;*/
 							case 1:
 								int number_add_inf;
 								cout << "Введите количество добавляемой информации" << endl;
@@ -1443,7 +1436,7 @@ main_menu:
 								cin >> number_add_inf;
 								for (int i = 0; i < number_add_inf; i++)
 								{
-									mas[0].push_information(i);
+									mas[0].push_information();
 								}
 								cout << endl;
 								goto sub_menu2_inf;
@@ -1545,7 +1538,7 @@ main_menu:
 							   goto sub_menu2_ch;
 							   break;
 						   case 5:
-							   mas[0].Write_into_file();
+							   mas[0].Write_into_file_check();
 							   cout << endl;
 							   goto sub_menu2_ch;
 							   break;
