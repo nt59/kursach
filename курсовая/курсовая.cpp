@@ -7,77 +7,10 @@
 #include <string>
 #include <cstdlib>
 #include <fstream>
+#include "Structs.h"
+#include "functions.h"
 
 using namespace std;
-
-struct Client
-{
-	int clientID;
-	char C_name[100];
-	bool type;
-};
-
-struct Information
-{
-	int informationID;
-	char A_V[100];
-	char Cd_DvD[100];
-	
-};
-
-struct Check
-{
-	int checkId;
-	int Data;
-	int RentTime;
-	int Revenue;
-};
-
-struct CaI   //св€зь информации и клиента
-{
-	int caiID;
-	int clientID;
-	int informationID;
-};
-
-struct CaC   //св€зь клиента и проверки
-{
-	int cacID;
-	int clientID;
-	int checkId;
-	int value_b; // колличество покупок
-};
-
-struct List_Client
-{
-	Client client;
-	List_Client *next;
-};
-
-struct List_Information
-{
-	Information information;
-	List_Information *next;
-};
-
-struct List_Check
-{
-	Check check;
-	List_Check *next;
-};
-
-
-struct List_CaI
-{
-	CaI cai;
-	List_CaI *next;
-};
-
-struct List_CaC
-{
-	CaC cac;
-	List_CaC  *next;
-};
 
 class Shop
 {
@@ -90,13 +23,6 @@ private:
 	List_CaI *head_cai;
 	List_CaC *head_cac;
 
-	//указатели на конец
-	/*List_Client *last_client;
-	List_Information *last_information;
-	List_Check *last_check;
-	List_CaI *last_cai;
-	List_CaC *last_cac;*/
-
 public:
 	Shop()
 	{
@@ -108,22 +34,6 @@ public:
 	}
 	ifstream in_stream;
 	ofstream out_stream;
-
-	
-	bool isNumber(string s)
-	{
-		bool isNumber = true;
-		if (s == "")
-			return false;
-		for (int i = 0; i < s.length(); i++)
-		if (!(s[i] >= '0' && s[i] <= '9'))
-		{
-			isNumber = false;
-			break;
-		}
-		return isNumber;
-	}
-	
 
 	Client push_Client(int i)											//добавить элементы в список с клавиатуры
 	{
@@ -324,19 +234,15 @@ public:
 		char c;
 		cout << "\n Enter data " << i + 1 << " check.\n ";
 		cout << "ID of new type was determined automatically" << endl;
-		/*cin >> tov.id;*/
+		
 		List_Check *node1 = head_check;
-		//ch = node1->check;
-		//tov.id = tov.id + 1;
-		//cin.get(c);
-		//cout << "¬ведите название товара" << endl;
-		//cin.getline(tov.name, 40);
+		
 		cout << "Enter revenue's value" << endl;
 		cin >> ch.Revenue;
 		cout << "Enter rent time" << endl;
 		cin >> ch.RentTime;
 		cout << "Enter data" << endl;
-		cin >> ch.Data;
+	    ch.Data = getData();
 
 
 		List_Check *node = new List_Check;
@@ -379,9 +285,6 @@ public:
 		char c;
 		cout << "\n Enter data of changing check.\n ";
 		cin.get(c);
-		//checkId = id;
-		//cout << "¬ведите название товара" << endl;
-		//cin.getline(tov.name, 40);
 		cout << "Enter ID of check" << endl;
 		cin >> ch.checkId;
 		cout << "Enter revenue if this ID" << endl;
@@ -389,7 +292,7 @@ public:
 		cout << "Enter rent time if this ID" << endl;
 		cin >> ch.RentTime;
 		cout << "Enter data if this ID" << endl;
-		cin >> ch.RentTime;
+		ch.Data = getData();
 		node->check = ch;
 		return ch;
 	}
@@ -537,12 +440,12 @@ public:
 		}
 		CaI cai;
 		char c;
-		cout << "\n ¬ведите данные операции .\n "; // что нибудь придумать
+		cout << "\n ¬ведите данные cai .\n "; // что нибудь придумать
 		cai.caiID = id;
 		cin.get(c);
-		cout << "¬ведите ID  дисциплины " << endl;
+		cout << "¬ведите ID  клиента " << endl;
 		cin >> cai.clientID;
-		cout << "¬ведите ID группы" << endl;
+		cout << "¬ведите ID информации" << endl;
 		cin >> cai.informationID;
 		node->cai = cai;    // вопрос может создатьс€
 		return cai;
@@ -910,9 +813,32 @@ public:
 	}
 	//--------------------------------------
 	//--------------------------------------
-	void report()
+	void ReportOfDebt()
 	{
-		
+		cout << "----------------------------------------------------------------------------\n";
+		cout << "ќ“„≈“ ѕќ «јƒќЋ∆Ќќ—“яћ  Ћ»≈Ќ“ќ¬\n\n";
+		cout << "¬ведите сегодн€шнюю дату: " << endl;
+		int Today = getData();
+		cout << "\n—ѕ»—ќ  ƒќЋ∆Ќ» ќ¬:\n";
+		List_Client *node = head_client;
+		while (node != NULL)
+		{
+			List_CaC * nodeCaC = head_cac;
+			while (nodeCaC != NULL && (node->client.clientID != nodeCaC->cac.clientID))
+			{
+				nodeCaC = nodeCaC->next;
+			}
+			List_Check *nodecheck = head_check;
+			while (nodecheck != NULL && (nodeCaC->cac.checkId != nodecheck->check.checkId))
+			{
+				nodecheck = nodecheck->next;
+			}
+			if ((Today - nodecheck->check.Data) > nodecheck->check.RentTime){
+				cout << node->client.C_name << "\n";
+			}
+			node = node->next;
+		}
+		cout << "\n----------------------------------------------------------------------------\n";
 	}
 };
 
@@ -1372,7 +1298,7 @@ main_menu:
 				  goto sub_menu1;
 				  break;
 			  case 7:
-				  mas[0].report();
+				  mas[0].ReportOfDebt();
 				  goto sub_menu1;
 				  break;
 			  case 0:
@@ -1806,7 +1732,7 @@ main_menu:
 				  goto sub_menu1;
 				  break;
 			  case 7:
-				  mas[0].report();
+				  mas[0].ReportOfDebt();
 				  goto sub_menu2;
 				  break;
 			  case 0:
